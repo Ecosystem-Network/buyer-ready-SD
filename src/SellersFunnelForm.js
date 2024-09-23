@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import {
-  TextField, Button, RadioGroup, FormControlLabel, Radio, Checkbox, Select, MenuItem,
-  InputLabel, FormControl, Typography, Grid, Box, Paper, Divider
-} from '@mui/material';
+import { TextField, Button, RadioGroup, FormControlLabel, Radio, Checkbox, Select, MenuItem, InputLabel, FormControl, Typography, Grid, Box, Paper, Divider } from '@mui/material';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from './firebaseConfig'; // Import Firebase Firestore configuration
 import Footer from './Footer';
 
 const SellersFunnelForm = () => {
@@ -17,10 +16,6 @@ const SellersFunnelForm = () => {
     desiredPrice: '',
     soleDecisionMaker: false,
     ownershipDuration: '',
-    unitMix: '',
-    rents: '',
-    grossIncome: '',
-    parkingSpots: '',
     isRealtor: false,
     roofAge: '',
     roofWarranty: '',
@@ -38,10 +33,17 @@ const SellersFunnelForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      // Add the form data to the Firestore 'sellersForms' collection
+      await addDoc(collection(db, 'sellersForms'), formData);
+      console.log('Document written successfully');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
   };
+
 
   return (
     <>
@@ -125,6 +127,14 @@ const SellersFunnelForm = () => {
                 />
               </Grid>
 
+              
+
+              {/* Property Info */}
+              <Grid item xs={12}>
+                <Divider sx={{ borderColor: '#9ca3af', my: 2 }} />
+                <Typography variant="h6" sx={{ mb: 1 }}>Property Information</Typography>
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   label="Address"
@@ -137,12 +147,6 @@ const SellersFunnelForm = () => {
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
-              </Grid>
-
-              {/* Property Info */}
-              <Grid item xs={12}>
-                <Divider sx={{ borderColor: '#9ca3af', my: 2 }} />
-                <Typography variant="h6" sx={{ mb: 1 }}>Property Information</Typography>
               </Grid>
 
               <Grid item xs={12}>
@@ -174,7 +178,7 @@ const SellersFunnelForm = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Desired Price"
+                  label="What is your Desired Price?"
                   fullWidth
                   name="desiredPrice"
                   value={formData.desiredPrice}
@@ -187,10 +191,22 @@ const SellersFunnelForm = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Ownership Duration"
+                  label="How Long Have you Owned the Property?"
                   fullWidth
                   name="ownershipDuration"
                   value={formData.ownershipDuration}
+                  onChange={handleChange}
+                  variant="outlined"
+                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
+                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="What is Your Time Frame to Sell?"
+                  fullWidth
+                  name="timeFrame"
+                  value={formData.timeFrame}
                   onChange={handleChange}
                   variant="outlined"
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
@@ -208,20 +224,9 @@ const SellersFunnelForm = () => {
                 </RadioGroup>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Time Frame to Sell"
-                  fullWidth
-                  name="timeFrame"
-                  value={formData.timeFrame}
-                  onChange={handleChange}
-                  variant="outlined"
-                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
-                />
-              </Grid>
+              
 
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   label="Are you a realtor or working with another realtor?"
                   fullWidth
@@ -232,15 +237,28 @@ const SellersFunnelForm = () => {
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
+              </Grid> */}
+              <Grid item xs={12} sm={6}>
+                <Typography sx={{ color: '#ffffff', mb: 1 }}>
+                Are you a realtor or working with another realtor?
+                </Typography>
+                <RadioGroup  name="isRealtor"
+                  value={formData.isRealtor}
+                  onChange={handleChange} row>
+                  <FormControlLabel value="Yes" control={<Radio sx={{ color: '#4f46e5' }} />} label="Yes" sx={{ color: '#ffffff' }} />
+                  <FormControlLabel value="No" control={<Radio sx={{ color: '#4f46e5' }} />} label="No" sx={{ color: '#ffffff' }} />
+                </RadioGroup>
               </Grid>
 
               <Grid item xs={12}>
+              <Divider sx={{ borderColor: '#9ca3af', my: 2 }} />
+
                 <Typography variant="h6" sx={{ mb: 1 }}>Property Features</Typography>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Roof Age"
+                  label="How old is your Roof?"
                   fullWidth
                   name="roofAge"
                   value={formData.roofAge}
@@ -253,7 +271,7 @@ const SellersFunnelForm = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Roof Warranty"
+                  label="Is there a Roof Warranty/ if yes how long?"
                   fullWidth
                   name="roofWarranty"
                   value={formData.roofWarranty}
@@ -266,7 +284,7 @@ const SellersFunnelForm = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Last Painted"
+                  label="When was it Last Painted?"
                   fullWidth
                   name="lastPainted"
                   value={formData.lastPainted}
@@ -279,7 +297,7 @@ const SellersFunnelForm = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Water Heater Age"
+                  label="What is the Water Heaters Age?"
                   fullWidth
                   name="waterHeaterAge"
                   value={formData.waterHeaterAge}
@@ -292,7 +310,7 @@ const SellersFunnelForm = () => {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Loan Balance"
+                  label="Do You have a Remaining Loan Balance?"
                   fullWidth
                   name="loanBalance"
                   value={formData.loanBalance}
@@ -305,7 +323,7 @@ const SellersFunnelForm = () => {
               
               <Grid item xs={12}>
               <TextField
-                label="Interior Improvements"
+                label="Have you done any Interior Improvements?"
                 fullWidth
                 name="interiorImprovements"
                 value={formData.interiorImprovements}
@@ -329,7 +347,7 @@ const SellersFunnelForm = () => {
               </Grid>
               <Grid item xs={12}>
               <Typography variant="subtitle1" align="center" sx={{ mb: 4, color: '#9ca3af' }}>
-                Feel Free to Call Us M-F 8am-5pm <strong>760-450-6090</strong>
+              Feel Free to Call Us: <strong>760-450-6090</strong> Monday-Friday 8am-5pm 
               </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <button className="button">
