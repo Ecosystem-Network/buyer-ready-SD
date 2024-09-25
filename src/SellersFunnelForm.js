@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, RadioGroup, FormControlLabel, Radio, Checkbox, Select, MenuItem, InputLabel, FormControl, Typography, Grid, Box, Paper, Divider } from '@mui/material';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from './firebaseConfig'; // Import Firebase Firestore configuration
+import { db } from './firebaseConfig'; 
 import Footer from './Footer';
 
 const SellersFunnelForm = () => {
@@ -22,7 +22,9 @@ const SellersFunnelForm = () => {
     lastPainted: '',
     waterHeaterAge: '',
     interiorImprovements: '',
-    loanBalance: ''
+    loanBalance: '',
+    unitMix: '',
+    unitRents:''
   });
 
   const handleChange = (e) => {
@@ -36,7 +38,6 @@ const SellersFunnelForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Add the form data to the Firestore 'sellersForms' collection
       await addDoc(collection(db, 'sellersForms'), formData);
       console.log('Document written successfully');
     } catch (error) {
@@ -63,9 +64,9 @@ const SellersFunnelForm = () => {
           boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
           borderRadius: '0.75rem',
           padding: 4,
-          maxWidth: { xs: '90%', sm: 800 }, // Adjust max width based on screen size
+          maxWidth: { xs: '90%', sm: 800 },
           width: '100%',
-          mx: { xs: 2, sm: 0 }, // Add horizontal margins on mobile
+          mx: { xs: 2, sm: 0 }, 
         }}
       >
         <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -320,7 +321,30 @@ const SellersFunnelForm = () => {
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
               </Grid>
-              
+              <Grid item xs={12} sm={6}>
+              <TextField
+                label="What is the Unit Mix?"
+                fullWidth
+                name="unitMix"
+                value={formData.unitMix}
+                onChange={handleChange}
+                variant="outlined"
+                InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
+                InputLabelProps={{ sx: { color: '#9ca3af' } }}
+              />
+              </Grid>
+              <Grid item xs={12}>
+              <TextField
+                label="What are the Unit Rents?"
+                fullWidth
+                name="unitRents"
+                value={formData.unitRents}
+                onChange={handleChange}
+                variant="outlined"
+                InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
+                InputLabelProps={{ sx: { color: '#9ca3af' } }}
+              />
+              </Grid>
               <Grid item xs={12}>
               <TextField
                 label="Have you done any Interior Improvements?"
@@ -333,12 +357,12 @@ const SellersFunnelForm = () => {
                   sx: { 
                     backgroundColor: '#374151', 
                     color: '#ffffff', 
-                    height: '100px' // Adjust height as needed
+                    height: '100px' 
                   },
                   inputProps: {
                     style: {
-                      height: '100px', // Adjust the input box height
-                      padding: '10px' // Add padding for better text spacing
+                      height: '100px',
+                      padding: '10px' 
                     }
                   }
                 }}
