@@ -27,6 +27,7 @@ const SellersFunnelForm = () => {
     unitRents:''
   });
 
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -40,7 +41,10 @@ const SellersFunnelForm = () => {
     try {
       await addDoc(collection(db, 'sellersForms'), formData);
       console.log('Document written successfully');
-    } catch (error) {
+          window.alert('Your form has been successfully submitted! You will now be redirected.');
+
+          window.location.href = 'https://www.lionscre.com/';
+        } catch (error) {
       console.error('Error adding document: ', error);
     }
   };
