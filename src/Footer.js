@@ -10,13 +10,13 @@ const Footer = ({ src, alt, width, height }) => {
       target="_blank"
       rel="noopener noreferrer"
       sx={{
-        display: 'flex', // Ensure the link container uses flex for alignment
-        justifyContent: 'center', // Center the image horizontally
-        alignItems: 'center', // Center the image vertically
-        width: '100%', // Ensure the footer spans the full width of the page
-        height: 'auto', // Maintain the aspect ratio
-        padding: '20px', // Add padding for better spacing
-        boxSizing: 'border-box', // Make sure padding is included in the element's total width/height
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: 'auto',
+        padding: 0, // Removed padding to eliminate extra space
+        margin: 0,  // Ensure there's no margin
       }}
     >
       <Box
@@ -24,10 +24,10 @@ const Footer = ({ src, alt, width, height }) => {
         src={src || '/License.png'}
         alt={alt || 'License Image'}
         sx={{
-          width: width || 'auto', // Allow the image to scale naturally
+          width: width || 'auto',
           height: height || 'auto',
-          maxWidth: '100%', // Ensure the image doesn't overflow the parent container
-          objectFit: 'contain', // Contain the image without cropping
+          maxWidth: '100%',
+          objectFit: 'contain',
         }}
       />
     </Box>
