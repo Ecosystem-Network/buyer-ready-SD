@@ -13,7 +13,7 @@ const Footer = ({ src, alt, width, height }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%',
+        width: 'auto',
         height: 'auto',
         padding: 0, // Removed padding to eliminate extra space
         margin: 0,  // Ensure there's no margin
