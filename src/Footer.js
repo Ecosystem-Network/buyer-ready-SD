@@ -6,41 +6,47 @@ const Footer = ({ src, alt, width, height }) => {
   return (
     <Box
       component="a"
-      href="https://www.lionscre.com/" // Set the URL to https://www.lionscre.com/
-      target="_blank" // Opens the link in a new tab
-      rel="noopener noreferrer" // Adds security to external links
+      href="https://www.lionscre.com/"
+      target="_blank"
+      rel="noopener noreferrer"
       sx={{
-        display: 'inline-block', // Ensure that it's treated as a block for proper rendering
+        display: 'flex', // Ensure the link container uses flex for alignment
+        justifyContent: 'center', // Center the image horizontally
+        alignItems: 'center', // Center the image vertically
+        width: '100%', // Ensure the footer spans the full width of the page
+        height: 'auto', // Maintain the aspect ratio
+        padding: '20px', // Add padding for better spacing
+        boxSizing: 'border-box', // Make sure padding is included in the element's total width/height
       }}
     >
       <Box
         component="img"
-        src={src || '/License.png'} // Default to License.png if src is not provided
-        alt={alt || 'License Image'} // Default alt text
+        src={src || '/License.png'}
+        alt={alt || 'License Image'}
         sx={{
-          width: width || '100%', // Default width to 100% if not provided
-          height: height || 'auto', // Default height to auto if not provided
-          objectFit: 'cover', // Ensure the image fits nicely
+          width: width || 'auto', // Allow the image to scale naturally
+          height: height || 'auto',
+          maxWidth: '100%', // Ensure the image doesn't overflow the parent container
+          objectFit: 'contain', // Contain the image without cropping
         }}
       />
     </Box>
   );
 };
 
-// Define prop types for type-checking and ensure robustness
 Footer.propTypes = {
-  src: PropTypes.string, // Image source
-  alt: PropTypes.string, // Alt text for accessibility
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Width can be a percentage or number
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Height can be a percentage or number
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-// Default props if not provided
 Footer.defaultProps = {
-  src: '/License.png', // Default image path
+  src: '/License.png',
   alt: 'License Image',
-  width: '100%', // Full width by default
-  height: 'auto', // Height is set to auto by default for responsiveness
+  width: 'auto',
+  height: 'auto',
 };
 
 export default Footer;
+
