@@ -154,16 +154,6 @@ const SellersFunnelForm = () => {
                 />
               </Grid>
 
-              <Grid item xs={12}>
-                <Typography sx={{ color: '#ffffff', mb: 1 }}>
-                  Have you thought about selling?
-                </Typography>
-                <RadioGroup name="thoughtOfSelling" value={formData.thoughtOfSelling} onChange={handleChange} row>
-                  <FormControlLabel value="Yes" control={<Radio sx={{ color: '#4f46e5' }} />} label="Yes" sx={{ color: '#ffffff' }} />
-                  <FormControlLabel value="No" control={<Radio sx={{ color: '#4f46e5' }} />} label="No" sx={{ color: '#ffffff' }} />
-                </RadioGroup>
-              </Grid>
-
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel sx={{ color: '#9ca3af' }}>Proceeds Option</InputLabel>
