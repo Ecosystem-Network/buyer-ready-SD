@@ -56,10 +56,10 @@ const SellersFunnelForm = () => {
 
   const sendEmailNotification = async (data) => {
     try {
-      // EmailJS configuration - you'll need to set these up in your EmailJS account
-      const serviceID = 'YOUR_SERVICE_ID'; // Replace with your EmailJS service ID
-      const templateID = 'YOUR_TEMPLATE_ID'; // Replace with your EmailJS template ID
-      const publicKey = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS public key
+      // EmailJS configuration
+      const serviceID = 'service_zcfgxzj';
+      const templateID = 'template_oflkl65';
+      const publicKey = 'TLCLX4VF-ATeqO5z4';
 
       const templateParams = {
         to_email: 'ericsdrealestate@gmail.com',
