@@ -9,23 +9,22 @@ const SellersFunnelForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     number: '',
-    address: '',
     email: '',
-    thoughtOfSelling: '',
-    proceedsOption: '',
+    budget: '',
+    downPayment: '',
+    preApproved: '',
     timeFrame: '',
-    desiredPrice: '',
-    soleDecisionMaker: false,
-    ownershipDuration: '',
-    isRealtor: false,
-    roofAge: '',
-    roofWarranty: '',
-    lastPainted: '',
-    waterHeaterAge: '',
-    interiorImprovements: '',
-    loanBalance: '',
-    unitMix: '',
-    unitRents:''
+    propertyType: '',
+    preferredAreas: '',
+    mustHaves: '',
+    dealBreakers: '',
+    currentHousing: '',
+    movingReason: '',
+    soleDecisionMaker: '',
+    isRealtor: '',
+    firstTimeBuyer: '',
+    investmentProperty: '',
+    additionalNotes: ''
   });
 
 
@@ -41,7 +40,11 @@ const SellersFunnelForm = () => {
     e.preventDefault();
     try {
       // Save to Firebase
-      await addDoc(collection(db, 'sellersForms'), formData);
+      await addDoc(collection(db, 'buyersForms'), {
+        ...formData,
+        submittedAt: new Date(),
+        timestamp: Date.now()
+      });
       console.log('Document written successfully');
 
       // Send email notification
@@ -58,7 +61,7 @@ const SellersFunnelForm = () => {
     try {
       // EmailJS configuration
       const serviceID = 'service_zcfgxzj';
-      const templateID = 'template_oflkl65';
+      const templateID = 'template_nfcv9ki';
       const publicKey = 'TLCLX4VF-ATeqO5z4';
 
       const templateParams = {
@@ -66,48 +69,46 @@ const SellersFunnelForm = () => {
         from_name: data.name || 'Unknown',
         from_email: data.email || 'No email provided',
         phone: data.number || 'No phone provided',
-        address: data.address || 'No address provided',
-        proceeds_option: data.proceedsOption || 'Not specified',
-        desired_price: data.desiredPrice || 'Not specified',
-        ownership_duration: data.ownershipDuration || 'Not specified',
+        budget: data.budget || 'Not specified',
+        down_payment: data.downPayment || 'Not specified',
+        pre_approved: data.preApproved || 'Not specified',
         time_frame: data.timeFrame || 'Not specified',
+        property_type: data.propertyType || 'Not specified',
+        preferred_areas: data.preferredAreas || 'Not specified',
+        must_haves: data.mustHaves || 'Not specified',
+        deal_breakers: data.dealBreakers || 'Not specified',
+        current_housing: data.currentHousing || 'Not specified',
+        moving_reason: data.movingReason || 'Not specified',
         sole_decision_maker: data.soleDecisionMaker || 'Not specified',
         is_realtor: data.isRealtor || 'Not specified',
-        roof_age: data.roofAge || 'Not specified',
-        roof_warranty: data.roofWarranty || 'Not specified',
-        last_painted: data.lastPainted || 'Not specified',
-        water_heater_age: data.waterHeaterAge || 'Not specified',
-        loan_balance: data.loanBalance || 'Not specified',
-        unit_mix: data.unitMix || 'Not specified',
-        unit_rents: data.unitRents || 'Not specified',
-        interior_improvements: data.interiorImprovements || 'Not specified',
+        first_time_buyer: data.firstTimeBuyer || 'Not specified',
+        investment_property: data.investmentProperty || 'Not specified',
+        additional_notes: data.additionalNotes || 'Not specified',
         submission_date: new Date().toLocaleString(),
         message: `
-New Property Inquiry from Sell State Next Gen Realty Form
+New Buyer Inquiry from Sell State Next Gen Realty Form
 
 PERSONAL INFORMATION:
 Name: ${data.name || 'Not provided'}
 Phone: ${data.number || 'Not provided'}
 Email: ${data.email || 'Not provided'}
-Address: ${data.address || 'Not provided'}
 
-PROPERTY DETAILS:
-Proceeds Option: ${data.proceedsOption || 'Not specified'}
-Desired Price: ${data.desiredPrice || 'Not specified'}
-Ownership Duration: ${data.ownershipDuration || 'Not specified'}
-Time Frame to Sell: ${data.timeFrame || 'Not specified'}
+BUYING DETAILS:
+Budget: ${data.budget || 'Not specified'}
+Down Payment: ${data.downPayment || 'Not specified'}
+Pre-Approved: ${data.preApproved || 'Not specified'}
+Time Frame: ${data.timeFrame || 'Not specified'}
+Property Type: ${data.propertyType || 'Not specified'}
+Preferred Areas: ${data.preferredAreas || 'Not specified'}
+Must Haves: ${data.mustHaves || 'Not specified'}
+Deal Breakers: ${data.dealBreakers || 'Not specified'}
+Current Housing: ${data.currentHousing || 'Not specified'}
+Moving Reason: ${data.movingReason || 'Not specified'}
 Sole Decision Maker: ${data.soleDecisionMaker || 'Not specified'}
 Is Realtor: ${data.isRealtor || 'Not specified'}
-
-PROPERTY FEATURES:
-Roof Age: ${data.roofAge || 'Not specified'}
-Roof Warranty: ${data.roofWarranty || 'Not specified'}
-Last Painted: ${data.lastPainted || 'Not specified'}
-Water Heater Age: ${data.waterHeaterAge || 'Not specified'}
-Loan Balance: ${data.loanBalance || 'Not specified'}
-Unit Mix: ${data.unitMix || 'Not specified'}
-Unit Rents: ${data.unitRents || 'Not specified'}
-Interior Improvements: ${data.interiorImprovements || 'Not specified'}
+First Time Buyer: ${data.firstTimeBuyer || 'Not specified'}
+Investment Property: ${data.investmentProperty || 'Not specified'}
+Additional Notes: ${data.additionalNotes || 'Not specified'}
 
 Submitted on: ${new Date().toLocaleString()}
         `
@@ -161,20 +162,20 @@ Submitted on: ${new Date().toLocaleString()}
           San Diego
         </Typography>
         <Typography variant="subtitle1" align="center" sx={{ mb: 4, color: '#9ca3af' }}>
-          Please fill out the form and Sell State will provide a Brokers Opinion of Value within a couple business days.
+          Please fill out the form and Sell State will contact you within a couple business days to help you find your perfect home.
         </Typography>
 
         {/* Service Information */}
         <Box sx={{ mb: 4, p: 3, backgroundColor: '#374151', borderRadius: '0.5rem', border: '1px solid #4b5563' }}>
-          <Typography variant="h6" sx={{ mb: 2, color: '#ffffff', fontWeight: 'bold' }}>
-            Selling?
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 2, color: '#d1d5db', lineHeight: 1.6 }}>
-            I list homes for only <strong style={{ color: '#4f46e5' }}>1.5%</strong> on the sell side – full-service representation, professional marketing, MLS exposure, and expert negotiation.
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 3, color: '#9ca3af', fontSize: '0.875rem', fontStyle: 'italic' }}>
-            (Buyer's agent commission is additional and negotiable.)
-          </Typography>
+        <Typography variant="h6" sx={{ mb: 2, color: '#ffffff', fontWeight: 'bold' }}>
+           Buying?
+         </Typography>
+         <Typography variant="body2" sx={{ mb: 2, color: '#d1d5db', lineHeight: 1.6 }}>
+           Work with me for just <strong style={{ color: '#4f46e5' }}>1.5%</strong> on the buy side. If the seller offers more than 1.5% in buyer's agent commission, any excess can be credited back to you at closing (subject to lender approval).
+         </Typography>
+         <Typography variant="body2" sx={{ mb: 3, color: '#9ca3af', fontSize: '0.875rem', fontStyle: 'italic' }}>
+           (Credits may be applied toward closing costs or as a reduction in purchase price, depending on lender and escrow requirements.)
+         </Typography>
 
           <Typography variant="h6" sx={{ mb: 2, color: '#ffffff', fontWeight: 'bold' }}>
             Experience Matters.
@@ -246,21 +247,61 @@ Submitted on: ${new Date().toLocaleString()}
 
               
 
-              {/* Property Info */}
+              {/* Buying Info */}
               <Grid item xs={12}>
                 <Divider sx={{ borderColor: '#9ca3af', my: 2 }} />
-                <Typography variant="h6" sx={{ mb: 1 }}>Property Information</Typography>
+                <Typography variant="h6" sx={{ mb: 1 }}>Buying Information</Typography>
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Address"
+                  label="What is your Budget Range?"
                   fullWidth
-                  name="address"
-                  value={formData.address}
+                  name="budget"
+                  value={formData.budget}
                   onChange={handleChange}
                   required
                   variant="outlined"
+                  placeholder="e.g., $500,000 - $750,000"
+                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
+                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Down Payment Amount"
+                  fullWidth
+                  name="downPayment"
+                  value={formData.downPayment}
+                  onChange={handleChange}
+                  variant="outlined"
+                  placeholder="e.g., $100,000 or 20%"
+                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
+                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography sx={{ color: '#ffffff', mb: 1 }}>
+                  Are you pre-approved for a loan?
+                </Typography>
+                <RadioGroup name="preApproved" value={formData.preApproved} onChange={handleChange} row>
+                  <FormControlLabel value="Yes" control={<Radio sx={{ color: '#4f46e5' }} />} label="Yes" sx={{ color: '#ffffff' }} />
+                  <FormControlLabel value="No" control={<Radio sx={{ color: '#4f46e5' }} />} label="No" sx={{ color: '#ffffff' }} />
+                  <FormControlLabel value="Working on it" control={<Radio sx={{ color: '#4f46e5' }} />} label="Working on it" sx={{ color: '#ffffff' }} />
+                </RadioGroup>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="What is your ideal timeline to buy?"
+                  fullWidth
+                  name="timeFrame"
+                  value={formData.timeFrame}
+                  onChange={handleChange}
+                  variant="outlined"
+                  placeholder="e.g., 3-6 months, ASAP, etc."
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
@@ -268,54 +309,42 @@ Submitted on: ${new Date().toLocaleString()}
 
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel sx={{ color: '#9ca3af' }}>Proceeds Option</InputLabel>
+                  <InputLabel sx={{ color: '#9ca3af' }}>Property Type</InputLabel>
                   <Select
-                    name="proceedsOption"
-                    value={formData.proceedsOption}
+                    name="propertyType"
+                    value={formData.propertyType}
                     onChange={handleChange}
                     sx={{ backgroundColor: '#374151', color: '#ffffff' }}
                   >
-                    <MenuItem value="Cashout">Cashout</MenuItem>
-                    <MenuItem value="Exchange">Exchange</MenuItem>
-                    <MenuItem value="TIC">TIC</MenuItem>
-                    <MenuItem value="NNN">NNN</MenuItem>
+                    <MenuItem value="Single Family">Single Family Home</MenuItem>
+                    <MenuItem value="Condo">Condo/Townhouse</MenuItem>
+                    <MenuItem value="Multi-Family">Multi-Family (2-4 units)</MenuItem>
+                    <MenuItem value="Commercial">Commercial Property</MenuItem>
+                    <MenuItem value="Land">Land/Lot</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <TextField
-                  label="What is your Desired Price?"
-                  fullWidth
-                  name="desiredPrice"
-                  value={formData.desiredPrice}
-                  onChange={handleChange}
-                  variant="outlined"
-                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
-                />
+                <Typography sx={{ color: '#ffffff', mb: 1 }}>
+                  Is this an investment property?
+                </Typography>
+                <RadioGroup name="investmentProperty" value={formData.investmentProperty} onChange={handleChange} row>
+                  <FormControlLabel value="Yes" control={<Radio sx={{ color: '#4f46e5' }} />} label="Yes" sx={{ color: '#ffffff' }} />
+                  <FormControlLabel value="No" control={<Radio sx={{ color: '#4f46e5' }} />} label="No" sx={{ color: '#ffffff' }} />
+                </RadioGroup>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  label="How Long Have you Owned the Property?"
+                  label="Preferred Areas/Neighborhoods"
                   fullWidth
-                  name="ownershipDuration"
-                  value={formData.ownershipDuration}
+                  name="preferredAreas"
+                  value={formData.preferredAreas}
                   onChange={handleChange}
                   variant="outlined"
-                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="What is Your Time Frame to Sell?"
-                  fullWidth
-                  name="timeFrame"
-                  value={formData.timeFrame}
-                  onChange={handleChange}
-                  variant="outlined"
+                  placeholder="e.g., La Jolla, Del Mar, Encinitas, etc."
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
@@ -331,20 +360,16 @@ Submitted on: ${new Date().toLocaleString()}
                 </RadioGroup>
               </Grid>
 
-              
+              <Grid item xs={12} sm={6}>
+                <Typography sx={{ color: '#ffffff', mb: 1 }}>
+                  Are you a first-time homebuyer?
+                </Typography>
+                <RadioGroup name="firstTimeBuyer" value={formData.firstTimeBuyer} onChange={handleChange} row>
+                  <FormControlLabel value="Yes" control={<Radio sx={{ color: '#4f46e5' }} />} label="Yes" sx={{ color: '#ffffff' }} />
+                  <FormControlLabel value="No" control={<Radio sx={{ color: '#4f46e5' }} />} label="No" sx={{ color: '#ffffff' }} />
+                </RadioGroup>
+              </Grid>
 
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Are you a realtor or working with another realtor?"
-                  fullWidth
-                  name="isRealtor"
-                  value={formData.isRealtor}
-                  onChange={handleChange}
-                  variant="outlined"
-                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
-                />
-              </Grid> */}
               <Grid item xs={12} sm={6}>
                 <Typography sx={{ color: '#ffffff', mb: 1 }}>
                 Are you a realtor or working with another realtor?
@@ -357,108 +382,77 @@ Submitted on: ${new Date().toLocaleString()}
                 </RadioGroup>
               </Grid>
 
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Current Housing Situation"
+                  fullWidth
+                  name="currentHousing"
+                  value={formData.currentHousing}
+                  onChange={handleChange}
+                  variant="outlined"
+                  placeholder="e.g., Renting, Living with family, Own current home, etc."
+                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
+                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
+                />
+              </Grid>
+
               <Grid item xs={12}>
               <Divider sx={{ borderColor: '#9ca3af', my: 2 }} />
 
-                <Typography variant="h6" sx={{ mb: 1 }}>Property Features</Typography>
+                <Typography variant="h6" sx={{ mb: 1 }}>Property Preferences</Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  label="How old is your Roof?"
+                  label="Must-Have Features"
                   fullWidth
-                  name="roofAge"
-                  value={formData.roofAge}
+                  name="mustHaves"
+                  value={formData.mustHaves}
                   onChange={handleChange}
                   variant="outlined"
+                  placeholder="e.g., Pool, Garage, Updated kitchen, Large backyard, etc."
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  label="Is there a Roof Warranty/ if yes how long?"
+                  label="Deal Breakers"
                   fullWidth
-                  name="roofWarranty"
-                  value={formData.roofWarranty}
+                  name="dealBreakers"
+                  value={formData.dealBreakers}
                   onChange={handleChange}
                   variant="outlined"
+                  placeholder="e.g., No HOA, Must have parking, No busy streets, etc."
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  label="When was it Last Painted?"
+                  label="Reason for Moving"
                   fullWidth
-                  name="lastPainted"
-                  value={formData.lastPainted}
+                  name="movingReason"
+                  value={formData.movingReason}
                   onChange={handleChange}
                   variant="outlined"
+                  placeholder="e.g., Growing family, Job relocation, Investment opportunity, etc."
                   InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
                   InputLabelProps={{ sx: { color: '#9ca3af' } }}
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="What is the Water Heaters Age?"
-                  fullWidth
-                  name="waterHeaterAge"
-                  value={formData.waterHeaterAge}
-                  onChange={handleChange}
-                  variant="outlined"
-                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Do You have a Remaining Loan Balance?"
-                  fullWidth
-                  name="loanBalance"
-                  value={formData.loanBalance}
-                  onChange={handleChange}
-                  variant="outlined"
-                  InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                  InputLabelProps={{ sx: { color: '#9ca3af' } }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-              <TextField
-                label="What is the Unit Mix?"
-                fullWidth
-                name="unitMix"
-                value={formData.unitMix}
-                onChange={handleChange}
-                variant="outlined"
-                InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                InputLabelProps={{ sx: { color: '#9ca3af' } }}
-              />
-              </Grid>
               <Grid item xs={12}>
               <TextField
-                label="What are the Unit Rents?"
+                label="Additional Notes or Special Requirements"
                 fullWidth
-                name="unitRents"
-                value={formData.unitRents}
+                name="additionalNotes"
+                value={formData.additionalNotes}
                 onChange={handleChange}
                 variant="outlined"
-                InputProps={{ sx: { backgroundColor: '#374151', color: '#ffffff' } }}
-                InputLabelProps={{ sx: { color: '#9ca3af' } }}
-              />
-              </Grid>
-              <Grid item xs={12}>
-              <TextField
-                label="Have you done any Interior Improvements?"
-                fullWidth
-                name="interiorImprovements"
-                value={formData.interiorImprovements}
-                onChange={handleChange}
-                variant="outlined"
+                placeholder="Any other important details about your home search..."
                 InputProps={{
                   sx: { 
                     backgroundColor: '#374151', 

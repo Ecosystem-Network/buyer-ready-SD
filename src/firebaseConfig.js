@@ -1,19 +1,19 @@
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
-
 import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { getAnalytics } from 'firebase/analytics';
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA90Sk8jezuulf4zfBmvtjry1-SRrXdqt4",
-    authDomain: "offer-ready-8f77d.firebaseapp.com",
-    projectId: "offer-ready-8f77d",
-    storageBucket: "offer-ready-8f77d.appspot.com",
-    messagingSenderId: "828098964005",
-    appId: "1:828098964005:web:bd5aae3a69acfa6861adcc",
-    measurementId: "G-LG3RT1MWBC"
-  };
+  apiKey: "AIzaSyA04ufjJtcilPZ15p7cn7_pBNEnhThMMcc",
+  authDomain: "buyer-ready-sd.firebaseapp.com",
+  projectId: "buyer-ready-sd",
+  storageBucket: "buyer-ready-sd.firebasestorage.app",
+  messagingSenderId: "275919724588",
+  appId: "1:275919724588:web:0c49bfa497d3722f4fb189",
+  measurementId: "G-HHPVVD5R2G"
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
