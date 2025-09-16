@@ -63,54 +63,60 @@ const SellersFunnelForm = () => {
 
       const templateParams = {
         to_email: 'ericsdrealestate@gmail.com',
-        from_name: data.name,
-        from_email: data.email,
-        phone: data.number,
-        address: data.address,
-        proceeds_option: data.proceedsOption,
-        desired_price: data.desiredPrice,
-        ownership_duration: data.ownershipDuration,
-        time_frame: data.timeFrame,
-        sole_decision_maker: data.soleDecisionMaker,
-        is_realtor: data.isRealtor,
-        roof_age: data.roofAge,
-        roof_warranty: data.roofWarranty,
-        last_painted: data.lastPainted,
-        water_heater_age: data.waterHeaterAge,
-        loan_balance: data.loanBalance,
-        unit_mix: data.unitMix,
-        unit_rents: data.unitRents,
-        interior_improvements: data.interiorImprovements,
+        from_name: data.name || 'Unknown',
+        from_email: data.email || 'No email provided',
+        phone: data.number || 'No phone provided',
+        address: data.address || 'No address provided',
+        proceeds_option: data.proceedsOption || 'Not specified',
+        desired_price: data.desiredPrice || 'Not specified',
+        ownership_duration: data.ownershipDuration || 'Not specified',
+        time_frame: data.timeFrame || 'Not specified',
+        sole_decision_maker: data.soleDecisionMaker || 'Not specified',
+        is_realtor: data.isRealtor || 'Not specified',
+        roof_age: data.roofAge || 'Not specified',
+        roof_warranty: data.roofWarranty || 'Not specified',
+        last_painted: data.lastPainted || 'Not specified',
+        water_heater_age: data.waterHeaterAge || 'Not specified',
+        loan_balance: data.loanBalance || 'Not specified',
+        unit_mix: data.unitMix || 'Not specified',
+        unit_rents: data.unitRents || 'Not specified',
+        interior_improvements: data.interiorImprovements || 'Not specified',
         submission_date: new Date().toLocaleString(),
         message: `
-          New Property Inquiry from Sell State Next Gen Realty Form
-          
-          Personal Information:
-          Name: ${data.name}
-          Phone: ${data.number}
-          Email: ${data.email}
-          Address: ${data.address}
-          
-          Property Details:
-          Proceeds Option: ${data.proceedsOption}
-          Desired Price: ${data.desiredPrice}
-          Ownership Duration: ${data.ownershipDuration}
-          Time Frame to Sell: ${data.timeFrame}
-          Sole Decision Maker: ${data.soleDecisionMaker}
-          Is Realtor: ${data.isRealtor}
-          
-          Property Features:
-          Roof Age: ${data.roofAge}
-          Roof Warranty: ${data.roofWarranty}
-          Last Painted: ${data.lastPainted}
-          Water Heater Age: ${data.waterHeaterAge}
-          Loan Balance: ${data.loanBalance}
-          Unit Mix: ${data.unitMix}
-          Unit Rents: ${data.unitRents}
-          Interior Improvements: ${data.interiorImprovements}
+New Property Inquiry from Sell State Next Gen Realty Form
+
+PERSONAL INFORMATION:
+Name: ${data.name || 'Not provided'}
+Phone: ${data.number || 'Not provided'}
+Email: ${data.email || 'Not provided'}
+Address: ${data.address || 'Not provided'}
+
+PROPERTY DETAILS:
+Proceeds Option: ${data.proceedsOption || 'Not specified'}
+Desired Price: ${data.desiredPrice || 'Not specified'}
+Ownership Duration: ${data.ownershipDuration || 'Not specified'}
+Time Frame to Sell: ${data.timeFrame || 'Not specified'}
+Sole Decision Maker: ${data.soleDecisionMaker || 'Not specified'}
+Is Realtor: ${data.isRealtor || 'Not specified'}
+
+PROPERTY FEATURES:
+Roof Age: ${data.roofAge || 'Not specified'}
+Roof Warranty: ${data.roofWarranty || 'Not specified'}
+Last Painted: ${data.lastPainted || 'Not specified'}
+Water Heater Age: ${data.waterHeaterAge || 'Not specified'}
+Loan Balance: ${data.loanBalance || 'Not specified'}
+Unit Mix: ${data.unitMix || 'Not specified'}
+Unit Rents: ${data.unitRents || 'Not specified'}
+Interior Improvements: ${data.interiorImprovements || 'Not specified'}
+
+Submitted on: ${new Date().toLocaleString()}
         `
       };
 
+      // Debug: Log the data being sent
+      console.log('Form data being sent:', data);
+      console.log('Template parameters:', templateParams);
+      
       // Initialize EmailJS with your public key
       emailjs.init(publicKey);
       
