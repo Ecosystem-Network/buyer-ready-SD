@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, RadioGroup, FormControlLabel, Radio, Select, MenuItem, InputLabel, FormControl, Typography, Grid, Box, Paper, Divider } from '@mui/material';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
+import emailjs from '@emailjs/browser';
 import Footer from './Footer';
 
 const SellersFunnelForm = () => {
@@ -39,13 +40,87 @@ const SellersFunnelForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Save to Firebase
       await addDoc(collection(db, 'sellersForms'), formData);
       console.log('Document written successfully');
-          window.alert('Your form has been successfully submitted! You will now be redirected.');
 
-          window.location.href = 'https://www.lionscre.com/';
-        } catch (error) {
+      // Send email notification
+      await sendEmailNotification(formData);
+      
+      window.alert('Your form has been successfully submitted! You will now be redirected.');
+      window.location.href = 'https://ericnans.sandiegoproperties4sale.com/';
+    } catch (error) {
       console.error('Error adding document: ', error);
+    }
+  };
+
+  const sendEmailNotification = async (data) => {
+    try {
+      // EmailJS configuration - you'll need to set these up in your EmailJS account
+      const serviceID = 'YOUR_SERVICE_ID'; // Replace with your EmailJS service ID
+      const templateID = 'YOUR_TEMPLATE_ID'; // Replace with your EmailJS template ID
+      const publicKey = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS public key
+
+      const templateParams = {
+        to_email: 'ericsdrealestate@gmail.com',
+        from_name: data.name,
+        from_email: data.email,
+        phone: data.number,
+        address: data.address,
+        proceeds_option: data.proceedsOption,
+        desired_price: data.desiredPrice,
+        ownership_duration: data.ownershipDuration,
+        time_frame: data.timeFrame,
+        sole_decision_maker: data.soleDecisionMaker,
+        is_realtor: data.isRealtor,
+        roof_age: data.roofAge,
+        roof_warranty: data.roofWarranty,
+        last_painted: data.lastPainted,
+        water_heater_age: data.waterHeaterAge,
+        loan_balance: data.loanBalance,
+        unit_mix: data.unitMix,
+        unit_rents: data.unitRents,
+        interior_improvements: data.interiorImprovements,
+        submission_date: new Date().toLocaleString(),
+        message: `
+          New Property Inquiry from Sell State Next Gen Realty Form
+          
+          Personal Information:
+          Name: ${data.name}
+          Phone: ${data.number}
+          Email: ${data.email}
+          Address: ${data.address}
+          
+          Property Details:
+          Proceeds Option: ${data.proceedsOption}
+          Desired Price: ${data.desiredPrice}
+          Ownership Duration: ${data.ownershipDuration}
+          Time Frame to Sell: ${data.timeFrame}
+          Sole Decision Maker: ${data.soleDecisionMaker}
+          Is Realtor: ${data.isRealtor}
+          
+          Property Features:
+          Roof Age: ${data.roofAge}
+          Roof Warranty: ${data.roofWarranty}
+          Last Painted: ${data.lastPainted}
+          Water Heater Age: ${data.waterHeaterAge}
+          Loan Balance: ${data.loanBalance}
+          Unit Mix: ${data.unitMix}
+          Unit Rents: ${data.unitRents}
+          Interior Improvements: ${data.interiorImprovements}
+        `
+      };
+
+      // Initialize EmailJS with your public key
+      emailjs.init(publicKey);
+      
+      // Send email
+      await emailjs.send(serviceID, templateID, templateParams);
+      console.log('Email sent successfully');
+      
+    } catch (error) {
+      console.error('Error sending email notification:', error);
+      // Don't throw error to prevent form submission failure
     }
   };
 
