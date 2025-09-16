@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, RadioGroup, FormControlLabel, Radio, Checkbox, Select, MenuItem, InputLabel, FormControl, Typography, Grid, Box, Paper, Divider } from '@mui/material';
+import { TextField, RadioGroup, FormControlLabel, Radio, Select, MenuItem, InputLabel, FormControl, Typography, Grid, Box, Paper, Divider } from '@mui/material';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 import Footer from './Footer';
@@ -74,14 +74,45 @@ const SellersFunnelForm = () => {
         }}
       >
         <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', mb: 2 }}>
-          Offer Ready
+          Sell State Next Gen Realty
         </Typography>
         <Typography variant="h5" align="center" sx={{ fontWeight: 'bold', mb: 2  }}>
           San Diego
         </Typography>
         <Typography variant="subtitle1" align="center" sx={{ mb: 4, color: '#9ca3af' }}>
-          Please fill out the form and South Coast Commercial will provide a Brokers Opinion of Value within a couple business days.
+          Please fill out the form and Sell State will provide a Brokers Opinion of Value within a couple business days.
         </Typography>
+
+        {/* Service Information */}
+        <Box sx={{ mb: 4, p: 3, backgroundColor: '#374151', borderRadius: '0.5rem', border: '1px solid #4b5563' }}>
+          <Typography variant="h6" sx={{ mb: 2, color: '#ffffff', fontWeight: 'bold' }}>
+            Selling?
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: '#d1d5db', lineHeight: 1.6 }}>
+            I list homes for only <strong style={{ color: '#4f46e5' }}>1.5%</strong> on the sell side – full-service representation, professional marketing, MLS exposure, and expert negotiation.
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 3, color: '#9ca3af', fontSize: '0.875rem', fontStyle: 'italic' }}>
+            (Buyer's agent commission is additional and negotiable.)
+          </Typography>
+
+          <Typography variant="h6" sx={{ mb: 2, color: '#ffffff', fontWeight: 'bold' }}>
+            Experience Matters.
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: '#d1d5db', lineHeight: 1.6 }}>
+            We have extensive experience helping clients with:
+          </Typography>
+          <Box sx={{ ml: 2 }}>
+            <Typography variant="body2" sx={{ mb: 1, color: '#d1d5db' }}>
+              🏠 Single-Family Homes
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1, color: '#d1d5db' }}>
+              🏢 Multi-Family Properties
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 0, color: '#d1d5db' }}>
+              🏬 Commercial Real Estate
+            </Typography>
+          </Box>
+        </Box>
      
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
@@ -364,9 +395,6 @@ const SellersFunnelForm = () => {
               />
               </Grid>
               <Grid item xs={12}>
-              <Typography variant="subtitle1" align="center" sx={{ mb: 4, color: '#9ca3af' }}>
-              Feel Free to Call Us: <strong>760-450-6090</strong> Monday-Friday 8am-5pm 
-              </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <button className="button">
                 Submit
